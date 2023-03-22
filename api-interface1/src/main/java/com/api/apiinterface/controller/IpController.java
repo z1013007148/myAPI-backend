@@ -8,6 +8,7 @@ import cn.hutool.json.JSONUtil;
 import com.api.sdk.model.Ip;
 import com.api.sdk.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ public class IpController {
 //    final String url = "http://ip-api.com/json";
     final String url = "http://www.geoplugin.net/json.gp";
 
+    @Value("${interfaces_number}")
+    private String number;
 
     @PostMapping()
     public String getCountryByPost(@RequestBody Ip ip, HttpServletResponse httpServletResponse) {
@@ -42,7 +45,7 @@ public class IpController {
         }
         JSONObject entries = JSONUtil.parseObj(result);
         Object country = entries.get("geoplugin_countryName");
-        return "POST : ip为 " + ip.getIp() + " 的国家或地区为: " + country;
+        return "POST : ip为 " + ip.getIp() + " 的国家或地区为: " + country+" ---->来自服务器"+number+" ";
     }
 
 

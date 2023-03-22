@@ -1,6 +1,5 @@
 package com.api.gateway;
 
-
 import com.api.common.model.entity.InterfaceInfo;
 import com.api.common.model.entity.User;
 import com.api.common.service.InnerInterfaceInfoService;
@@ -12,28 +11,21 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.filter.NettyWriteResponseFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.core.io.buffer.DefaultDataBufferFactory;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -167,7 +159,6 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
                     log.info("body instanceof Flux: {}", (body instanceof Flux));
                     if (body instanceof Flux) {
                         Flux<? extends DataBuffer> fluxBody = Flux.from(body);
-//                            Flux<? extends  DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
                         // 往返回值里写数据
                         // 拼接字符串
                         boolean success = (statusCode == HttpStatus.OK)&&(null==originalResponse.getHeaders().get("status"));

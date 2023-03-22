@@ -2,6 +2,7 @@ package com.api.apiinterface.controller;
 
 import com.api.sdk.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/name")
 @Slf4j
 public class NameController {
+    @Value("${interfaces_number}")
+    private String number;
 
     @GetMapping("/get")
     public String getNameByGet(String name, HttpServletRequest request) {
@@ -26,7 +29,7 @@ public class NameController {
     @PostMapping("/user")
     public String getUsernameByPost(@RequestBody User user, HttpServletRequest request) {
         log.info("userName:"+user.getUserName());
-        return "POST 用户名字是" + user.getUserName();
+        return "POST 用户名字是" + user.getUserName()+" ---->来自服务器"+number+" ";
         
         /*
          * String accessKey = request.getHeader("accessKey");
