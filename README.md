@@ -14,6 +14,7 @@ API接入
 计费  
 日志  
 流量保护  
+负载均衡  
 
 ## 架构图:  
 ![image](https://github.com/z1013007148/myAPI-backend/blob/master/img/%E6%9E%B6%E6%9E%84%E5%9B%BE.png)
