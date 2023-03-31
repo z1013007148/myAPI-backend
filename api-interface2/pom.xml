@@ -12,7 +12,7 @@
     </parent>
     <groupId>com.api</groupId>
     <artifactId>api-interface2</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <name>api-interface2</name>
     <description>api-interface2</description>
     <properties>

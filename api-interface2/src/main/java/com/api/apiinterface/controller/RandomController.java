@@ -21,7 +21,8 @@ public class RandomController {
     @GetMapping()
     public String getRandomByGet()  {
         int i = random.nextInt(10000);
-        return "GET 随机数是" + i + " ---->来自服务器" + number + " ";
+        String result = String.format("%04d",i);
+        return "GET 验证码是" + result + " ---->来自服务器" + number + " ";
     }
 
 
