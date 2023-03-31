@@ -3,7 +3,9 @@ package com.api.apiinterface.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
 
@@ -17,7 +19,7 @@ public class RandomController {
     private String number;
 
     @GetMapping()
-    public String getRandomByGet() throws InterruptedException {
+    public String getRandomByGet()  {
         int i = random.nextInt(10000);
         return "GET 随机数是" + i + " ---->来自服务器" + number + " ";
     }
