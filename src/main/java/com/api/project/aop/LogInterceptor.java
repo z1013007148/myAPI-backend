@@ -26,6 +26,7 @@ public class LogInterceptor {
      * 执行拦截
      */
     @Around("execution(* com.api.project.controller.*.*(..))")
+    // ProceedingJoinPoint 提供方法用于控制目标方法的执行和获取信息
     public Object doInterceptor(ProceedingJoinPoint point) throws Throwable {
         // 计时
         StopWatch stopWatch = new StopWatch();
@@ -40,7 +41,7 @@ public class LogInterceptor {
         Object[] args = point.getArgs();
         String reqParam = "[" + StringUtils.join(args, ", ") + "]";
         // 输出请求日志
-        log.info("request start，id: {}, path: {}, ip: {}, params: {}", requestId, url,
+        log.info("request start, id: {}, path: {}, ip: {}, params: {}", requestId, url,
                 httpServletRequest.getRemoteHost(), reqParam);
         // 执行原方法
         Object result = point.proceed();

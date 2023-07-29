@@ -1,4 +1,4 @@
-use api;
+use myapi_db;
 
 
 -- 接口信息

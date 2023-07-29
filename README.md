@@ -17,7 +17,7 @@ API接入
 负载均衡  
 
 ## 架构图:  
-![image](https://github.com/z1013007148/myAPI-backend/blob/master/img/%E6%9E%B6%E6%9E%84%E5%9B%BE2.png)
+![image](https://github.com/z1013007148/myAPI-backend/blob/master/img/%E6%9E%B6%E6%9E%84%E5%9B%BE.png)
 
 ## 技术选型:  
 Spring Boot  

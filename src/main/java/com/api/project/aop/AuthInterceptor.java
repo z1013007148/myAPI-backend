@@ -34,7 +34,9 @@ public class AuthInterceptor {
     /**
      * 执行拦截
      */
+    // @AutoCheck注解的会触发环绕通知
     @Around("@annotation(authCheck)")
+    // ProceedingJoinPoint 提供方法用于控制目标方法的执行和获取信息
     public Object doInterceptor(ProceedingJoinPoint joinPoint, AuthCheck authCheck) throws Throwable {
         // anyRole先把空的过滤掉
         List<String> anyRoleList = Arrays.stream(authCheck.anyRole()).filter(StringUtils::isNotBlank).collect(Collectors.toList());

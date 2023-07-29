@@ -68,8 +68,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 
         // 2. 访问控制 - 黑白名单
         if (!IP_WHITE_LIST.contains(sourceAddress)) {
-            response.setStatusCode(HttpStatus.FORBIDDEN);
-            return response.setComplete();
+            return handleNoAuth(response);
         }
 
         // 3. 用户鉴权（判断 ak、sk 是否合法）

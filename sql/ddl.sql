@@ -1,8 +1,8 @@
 -- 创建库
-create database if not exists api;
+create database if not exists myapi_db;
 
 -- 切换库
-use api;
+use myapi_db;
 
 -- 用户表
 create table if not exists user

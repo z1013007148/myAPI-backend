@@ -54,4 +54,6 @@ public class WordController {
         return "GET 每日一言:" + result+" ---->来自服务器"+number+" ";
     }
 
+    // todo 在interface模块里直接访问数据库是比较高效的方式吗
+
 }
