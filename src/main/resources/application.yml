@@ -7,11 +7,7 @@ spring:
 #    include: password # 导入application-password.yml(此文件未用git管理)
 
   # DataSource Config
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/myapi_db
-    username: myAPI
-    password: P@ssw0rd101.
+
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER

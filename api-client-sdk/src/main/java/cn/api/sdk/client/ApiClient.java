@@ -1,21 +1,19 @@
-package com.api.sdk.client;
+package cn.api.sdk.client;
 
+import cn.api.sdk.model.Ip;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
-import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.json.JSONUtil;
-import com.api.sdk.model.Ip;
-import com.api.sdk.model.User;
+
+import cn.api.sdk.model.User;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.HttpCookie;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.api.sdk.utils.SignUtils.genSign;
+import static cn.api.sdk.utils.SignUtils.genSign;
 
 /**
  * 调用第三方接口的客户端
@@ -158,6 +156,20 @@ public class ApiClient {
         log.info("getCountry " + result);
         return result;
 
+    }
+
+    /**
+     * 获取头像地址
+     * @return
+     */
+    public String getAvatarUrlByPost(String addr){
+        // "/api/avatar"
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + addr)
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        String result = httpResponse.body();
+        log.info("getAvatarUrl " + result);
+        return result;
     }
 
 }

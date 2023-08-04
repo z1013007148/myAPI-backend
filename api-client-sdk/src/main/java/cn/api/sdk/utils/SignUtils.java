@@ -1,4 +1,4 @@
-package com.api.sdk.utils;
+package cn.api.sdk.utils;
 
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;

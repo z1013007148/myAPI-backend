@@ -14,7 +14,7 @@ import com.api.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.api.project.model.enums.InterfaceInfoStatusEnum;
 import com.api.project.service.InterfaceInfoService;
 import com.api.project.service.UserService;
-import com.api.sdk.client.ApiClient;
+import cn.api.sdk.client.ApiClient;
 import com.api.common.model.entity.InterfaceInfo;
 import com.api.common.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -257,13 +257,13 @@ public class InterfaceInfoController {
         ApiClient client = new ApiClient(accessKey, secretKey);
 
 
-        // todo 为什么判断调用什么接口的逻辑要写在client-sdk里而不是网关里？
+        // todo 判断调用什么接口的逻辑应该写在client-sdk里而还是网关里？
         String interface_type = oldInterfaceInfo.getUrl();
         String result = null;
         if ("/api/name/user".equals(interface_type)) {
             // 把前端过来的userRequestParams转换成user.class
             Gson gson = new Gson();
-            com.api.sdk.model.User user = gson.fromJson(userRequestParams, com.api.sdk.model.User.class);
+            cn.api.sdk.model.User user = gson.fromJson(userRequestParams, cn.api.sdk.model.User.class);
             // 假设它就接入这个方法
             result = client.getUserNameByPost("/api/name/user", user);
         } else if ("/api/random".equals(interface_type)) {
@@ -272,8 +272,10 @@ public class InterfaceInfoController {
             result = client.getEveryDayWordByGet("/api/word");
         } else if ("/api/ip".equals(interface_type)) {
             Gson gson = new Gson();
-            com.api.sdk.model.Ip ip = gson.fromJson(userRequestParams, com.api.sdk.model.Ip.class);
+            cn.api.sdk.model.Ip ip = gson.fromJson(userRequestParams, cn.api.sdk.model.Ip.class);
             result = client.getIpCountryByPost("/api/ip", ip);
+        }else if("/api/avatar".equals(interface_type)){
+            result = client.getAvatarUrlByPost("/api/ip");
         }
 
 

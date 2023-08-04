@@ -1,4 +1,4 @@
-package com.api.sdk.model;
+package cn.api.sdk.model;
 
 import lombok.Data;
 

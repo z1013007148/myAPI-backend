@@ -1,4 +1,5 @@
-package com.api.sdk.model;
+package cn.api.sdk.model;
+
 
 import lombok.Data;
 
@@ -7,5 +8,6 @@ import lombok.Data;
  */
 @Data
 public class Ip {
+
     private String ip;
 }

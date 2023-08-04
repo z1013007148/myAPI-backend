@@ -1,14 +1,14 @@
 package com.api.project.controller;
 
 import cn.hutool.core.util.RandomUtil;
-import com.api.sdk.client.ApiClient;
+import cn.api.sdk.client.ApiClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.api.sdk.utils.SignUtils.genSign;
+import static cn.api.sdk.utils.SignUtils.genSign;
 
 @SpringBootTest
 public class InterfaceInfoControllerTest {

@@ -5,7 +5,7 @@ import com.api.common.model.entity.User;
 import com.api.common.service.InnerInterfaceInfoService;
 import com.api.common.service.InnerUserInterfaceInfoService;
 import com.api.common.service.InnerUserService;
-import com.api.sdk.utils.SignUtils;
+import cn.api.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;

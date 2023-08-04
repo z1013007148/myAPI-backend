@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.api</groupId>
     <artifactId>api-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>com.api</groupId>
             <artifactId>api-client-sdk</artifactId>
-            <version>0.0.1</version>
+            <version>0.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

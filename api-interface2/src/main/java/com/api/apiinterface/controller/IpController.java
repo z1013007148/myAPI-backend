@@ -2,17 +2,18 @@ package com.api.apiinterface.controller;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.api.sdk.model.Ip;
+import cn.api.sdk.model.Ip;
+import cn.api.sdk.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 
 @RestController
@@ -29,7 +30,7 @@ public class IpController {
     @PostMapping()
     public String getCountryByPost(@RequestBody Ip ip, HttpServletResponse httpServletResponse) {
         // 访问这个网页是GET
-        String result;
+        String result = null;
         try {
             HttpResponse res = HttpRequest.get(url + "?ip=" + ip.getIp())
                     .timeout(1000)

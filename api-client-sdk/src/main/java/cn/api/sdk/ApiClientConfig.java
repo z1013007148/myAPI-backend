@@ -1,6 +1,6 @@
-package com.api.sdk;
+package cn.api.sdk;
 
-import com.api.sdk.client.ApiClient;
+import cn.api.sdk.client.ApiClient;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
