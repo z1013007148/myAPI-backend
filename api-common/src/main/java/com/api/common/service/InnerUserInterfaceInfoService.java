@@ -6,7 +6,7 @@ public interface InnerUserInterfaceInfoService {
     /**
      * 调用接口统计
      */
-    boolean invokeCount(long interfaceInfoId, long userId);
+    Integer invokeCount(long interfaceInfoId, long userId);
 
     /**
      * 得到用户该接口还剩多少次调用次数

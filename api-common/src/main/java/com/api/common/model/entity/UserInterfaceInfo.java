@@ -53,6 +53,8 @@ public class UserInterfaceInfo implements Serializable {
      */
     private Date updateTime;
 
+    private int version;
+
     /**
      * 是否删除(0-未删, 1-已删)
      */

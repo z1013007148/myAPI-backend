@@ -1,7 +1,7 @@
 spring:
   devtools:
     restart:
-      enable: true
+      enable: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://124.71.132.236:3308/myapi_db
@@ -9,4 +9,5 @@ spring:
     password: P@ssw0rd101.
 logging:
   level:
-    com.cbj.mapper.*: debug
+    root: error
+    com.cbj.mapper.*: error

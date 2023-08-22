@@ -9,8 +9,9 @@ public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
 
     /**
      * 调用接口统计
+     * 返回剩下次数，null为出错
      */
-    boolean invokeCount(long interfaceInfoId, long userId);
+    Integer invokeCount(long interfaceInfoId, long userId);
 
     /**
      * 返回用户对该接口的剩余调用次数
@@ -19,4 +20,13 @@ public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
      * @return
      */
     int getLeftNum(long interfaceInfoId, long userId);
+
+    /**
+     * 回滚接口调用次数
+     * @param interfaceInfoId
+     * @param userId
+     * @param num
+     * @return
+     */
+    public boolean rollBackCount(long interfaceInfoId, long userId, int num);
 }

@@ -3,7 +3,7 @@ spring:
     name: api-backend
 
   profiles:
-    active: dev # 启用application-dev配置文件
+    active: pro # 启用application-dev配置文件
 #    include: password # 导入application-password.yml(此文件未用git管理)
 
   # DataSource Config
