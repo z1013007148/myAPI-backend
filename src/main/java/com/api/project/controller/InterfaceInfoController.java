@@ -1,5 +1,7 @@
 package com.api.project.controller;
 
+import com.api.project.factory.ApiStrategyFactory;
+import com.api.project.myinterface.ApiStrategy;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
@@ -260,24 +262,30 @@ public class InterfaceInfoController {
         // todo 判断调用什么接口的逻辑应该写在client-sdk里而还是网关里？
         String interface_type = oldInterfaceInfo.getUrl();
         String result = null;
-        if ("/api/name/user".equals(interface_type)) {
-            // 把前端过来的userRequestParams转换成user.class
-            Gson gson = new Gson();
-            cn.api.sdk.model.User user = gson.fromJson(userRequestParams, cn.api.sdk.model.User.class);
-            // 假设它就接入这个方法
-            result = client.getUserNameByPost("/api/name/user", user);
-        } else if ("/api/random".equals(interface_type)) {
-            result = client.getRandomByGet("/api/random");
-        } else if ("/api/word".equals(interface_type)) {
-            result = client.getEveryDayWordByGet("/api/word");
-        } else if ("/api/ip".equals(interface_type)) {
-            Gson gson = new Gson();
-            cn.api.sdk.model.Ip ip = gson.fromJson(userRequestParams, cn.api.sdk.model.Ip.class);
-            result = client.getIpCountryByPost("/api/ip", ip);
-        }else if("/api/avatar".equals(interface_type)){
-            result = client.getAvatarUrlByPost("/api/ip");
-        }
 
+        // 用策略工厂实现
+//        if ("/api/name/user".equals(interface_type)) {
+//            // 把前端过来的userRequestParams转换成user.class
+//            Gson gson = new Gson();
+//            cn.api.sdk.model.User user = gson.fromJson(userRequestParams, cn.api.sdk.model.User.class);
+//
+//            result = client.getUserNameByPost("/api/name/user", user);
+//        } else if ("/api/random".equals(interface_type)) {
+//            result = client.getRandomByGet("/api/random");
+//        } else if ("/api/word".equals(interface_type)) {
+//            result = client.getEveryDayWordByGet("/api/word");
+//        } else if ("/api/ip".equals(interface_type)) {
+//            Gson gson = new Gson();
+//            cn.api.sdk.model.Ip ip = gson.fromJson(userRequestParams, cn.api.sdk.model.Ip.class);
+//            result = client.getIpCountryByPost("/api/ip", ip);
+//        }else if("/api/avatar".equals(interface_type)){
+//            result = client.getAvatarUrlByPost("/api/ip");
+//        }
+
+        // 创建一个静态策略工厂，根据 interface_type 获取相应的策略对象
+        ApiStrategy strategy = ApiStrategyFactory.getStrategy(interface_type);
+
+        result = strategy.execute(userRequestParams, client);
 
         return ResultUtils.success(result);
     }
