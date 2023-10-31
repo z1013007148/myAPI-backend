@@ -1,6 +1,7 @@
 package com.api.gateway;
 
 import com.api.common.config.RabbitMQConfig;
+import com.api.common.model.dto.RequestParamsField;
 import com.api.common.model.entity.InterfaceInfo;
 import com.api.common.model.entity.User;
 import com.api.common.service.InnerInterfaceInfoService;
@@ -8,7 +9,10 @@ import com.api.common.service.InnerUserInterfaceInfoService;
 import com.api.common.service.InnerUserService;
 import cn.api.sdk.utils.SignUtils;
 import com.api.common.vo.UserInterfaceRollBackInfoMessage;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -25,6 +29,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -77,7 +82,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         log.info("请求来源地址：" + sourceAddress);
         log.info("请求来源地址：" + request.getRemoteAddress());
         ServerHttpResponse response = exchange.getResponse();
-
+        
         // 2. 限流
         Boolean rateLimit = stringRedisTemplate.opsForValue().setIfAbsent(path, "1", 1, TimeUnit.SECONDS);
         if(Boolean.FALSE.equals(rateLimit)){
@@ -108,7 +113,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             return handleNoAuth(response);
         }
 
-//         6. 验证apiClient的随机数nonce（最长为4的）,并用Redis防重放
+        // 6. 验证apiClient的随机数nonce（最长为4的）,并用Redis防重放
         assert nonce != null;
         Boolean success = stringRedisTemplate.opsForValue().setIfAbsent(nonce, "1", 5, TimeUnit.MINUTES);
         if (Long.parseLong(nonce) > 10000L || Boolean.FALSE.equals(success)) {
@@ -146,8 +151,22 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             return handleNoAuth(response);
         }
 
-        // 10. 调用计数
-        Integer leftNum=null;
+        // 10. 参数校验
+        String requestParams = interfaceInfo.getRequestParams();
+        MultiValueMap<String, String> queryParams = request.getQueryParams();
+
+        List<RequestParamsField> requestParamFieldList = new Gson().fromJson(requestParams, new Gson().fromJson(requestParams, new TypeToken<List<RequestParamsField>>() {
+        }.getType()));
+        for(RequestParamsField requestParamField:requestParamFieldList){
+            if("true".equals(requestParamField.getRequired())){
+                if(StringUtils.isBlank(queryParams.getFirst(requestParamField.getFieldName())) || !queryParams.containsKey(requestParamField.getFieldName())){
+                    return handleNoAuth(response);
+                }
+            }
+        }
+
+        // 11. 调用计数
+        Integer leftNum;
         try{
             // 原子操作，查接口调用次数和调用放在一个事务里，保证一致性
             leftNum = innerUserInterfaceInfoService.invokeCount(interfaceInfo.getId(), invokeUser.getId());
@@ -163,7 +182,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             return handleNoAuth(response);
         }
 
-        // 11. 请求转发，调用模拟接口 + 响应日志 + 回滚
+        // 12. 请求转发，调用模拟接口 + 响应日志 + 回滚
         return handleResponse(exchange, chain, interfaceInfo.getId(), invokeUser.getId(), leftNum);
     }
 
