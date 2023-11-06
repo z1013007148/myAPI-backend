@@ -84,15 +84,15 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
         
         // 2. 限流
-        Boolean rateLimit = stringRedisTemplate.opsForValue().setIfAbsent(path, "1", 1, TimeUnit.SECONDS);
-        if(Boolean.FALSE.equals(rateLimit)){
-            log.info("限流，拒绝访问 "+path);
-            return handleRateLimit(response);
-        }
+//        Boolean rateLimit = stringRedisTemplate.opsForValue().setIfAbsent(path, "1", 1, TimeUnit.SECONDS);
+//        if(Boolean.FALSE.equals(rateLimit)){
+//            log.info("限流，拒绝访问 "+path);
+//            return handleRateLimit(response);
+//        }
         // 3. 访问控制 - 黑白名单
-        if (!IP_WHITE_LIST.contains(sourceAddress)) {
-            return handleNoAuth(response);
-        }
+//        if (!IP_WHITE_LIST.contains(sourceAddress)) {
+//            return handleNoAuth(response);
+//        }
 
         // 4. 用户鉴权（判断 ak、sk 是否合法）
         HttpHeaders headers = request.getHeaders();
@@ -152,18 +152,18 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // 10. 参数校验
-        String requestParams = interfaceInfo.getRequestParams();
-        MultiValueMap<String, String> queryParams = request.getQueryParams();
-
-        List<RequestParamsField> requestParamFieldList = new Gson().fromJson(requestParams, new Gson().fromJson(requestParams, new TypeToken<List<RequestParamsField>>() {
-        }.getType()));
-        for(RequestParamsField requestParamField:requestParamFieldList){
-            if("true".equals(requestParamField.getRequired())){
-                if(StringUtils.isBlank(queryParams.getFirst(requestParamField.getFieldName())) || !queryParams.containsKey(requestParamField.getFieldName())){
-                    return handleNoAuth(response);
-                }
-            }
-        }
+//        String requestParams = interfaceInfo.getRequestParams();
+//        MultiValueMap<String, String> queryParams = request.getQueryParams();
+//
+//        List<RequestParamsField> requestParamFieldList = new Gson().fromJson(requestParams, new Gson().fromJson(requestParams, new TypeToken<List<RequestParamsField>>() {
+//        }.getType()));
+//        for(RequestParamsField requestParamField:requestParamFieldList){
+//            if("true".equals(requestParamField.getRequired())){
+//                if(StringUtils.isBlank(queryParams.getFirst(requestParamField.getFieldName())) || !queryParams.containsKey(requestParamField.getFieldName())){
+//                    return handleNoAuth(response);
+//                }
+//            }
+//        }
 
         // 11. 调用计数
         Integer leftNum;
